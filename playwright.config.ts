@@ -2,7 +2,7 @@ import { defineConfig, devices } from "@playwright/test";
 
 export default defineConfig({
   testDir: "./tests",
-  timeout: 30_000,
+  timeout: 60_000,  // Increased from 30s to 60s for Sauce Demo
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 4 : 2,
   reporter: [

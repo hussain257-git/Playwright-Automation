@@ -63,8 +63,8 @@ test.describe("Sauce Demo - Authentication Tests", () => {
       // Logout for next iteration
       await loginPage.logout();
       
-      // Wait for logout to complete
-      await page.waitForTimeout(500);
+      // Wait a bit for page to settle
+      await page.waitForLoadState("networkidle").catch(() => {});
       
       // Verify back on login page
       const loginPageUrl = await page.url();
