@@ -9,6 +9,9 @@ export default defineConfig({
     ["html", { outputFolder: "playwright-report" }],
     ["list"],
     ["json", { outputFile: "test-results.json" }],
+    ["junit", { outputFile: "test-results/results.xml" }],
+    ["github"],  // For GitHub Actions
+    process.env.CI ? ["dot"] : ["list"],  // Dot reporter for CI
   ],
   use:{
     baseURL: process.env.BASE_URL || "https://www.saucedemo.com",

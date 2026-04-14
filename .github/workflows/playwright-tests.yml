@@ -72,9 +72,26 @@ jobs:
           echo "" >> $env:GITHUB_STEP_SUMMARY
           echo "### Test Run Details" >> $env:GITHUB_STEP_SUMMARY
           echo "- **Date**: $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')" >> $env:GITHUB_STEP_SUMMARY
-          echo "- **Branch**: ${{ github.ref }}" >> $env:GITHUB_STEP_SUMMARY
+          echo "- **Branch**: ${{ github.ref_name }}" >> $env:GITHUB_STEP_SUMMARY
+          echo "- **Triggered By**: ${{ github.actor }}" >> $env:GITHUB_STEP_SUMMARY
           echo "- **Commit**: ${{ github.sha }}" >> $env:GITHUB_STEP_SUMMARY
           echo "- **Test Status**: Check artifacts for detailed results" >> $env:GITHUB_STEP_SUMMARY
+
+      - name: Parse test results
+        if: always()
+        id: test_summary
+        run: |
+          node scripts/generate-test-summary.js | Tee-Object -Variable test_summary
+          echo "TEST_SUMMARY=$test_summary" >> $env:GITHUB_ENV
+
+      - name: Display test metrics
+        if: always()
+        run: |
+          if (Test-Path test-summary.json) {
+            Get-Content test-summary.json
+          } else {
+            Write-Host "No test summary available"
+          }
 
       - name: Send email notification on success
         if: success()
@@ -87,6 +104,7 @@ jobs:
           subject: "✅ Playwright Tests PASSED - Pipeline #${{ github.run_number }}"
           to: HussainBasha.Shaik257@outlook.com
           from: "GitHub Actions <playwright-tests@github.com>"
+          attachments: playwright-report/
           body: |
             🎉 **Playwright Test Pipeline Execution Summary**
 
@@ -95,34 +113,60 @@ jobs:
             **Pipeline Details:**
             - Repository: ${{ github.repository }}
             - Branch: ${{ github.ref_name }}
-            - Commit: ${{ github.sha }}
-            - Author: ${{ github.actor }}
+            - Triggered By: ${{ github.actor }}
+            - Commit SHA: ${{ github.sha }}
             - Run ID: #${{ github.run_number }}
-            - Execution Time: ${{ job.status }}
+            - Triggered On: ${{ github.event_name }}
+            - Timestamp: $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss UTC')
 
-            **Test Framework:**
-            - Framework: Playwright 1.44.0
-            - Language: TypeScript 5.9.3
-            - Test Site: Sauce Demo (https://www.saucedemo.com)
+            **Test Execution Metrics:**
+            - Total Test Cases: $(if (Test-Path test-summary.json) { (Get-Content test-summary.json | ConvertFrom-Json).totalTests } else { "N/A" })
+            - ✅ Passed: $(if (Test-Path test-summary.json) { (Get-Content test-summary.json | ConvertFrom-Json).passed } else { "N/A" })
+            - ❌ Failed: 0
+            - ⏭️ Skipped: $(if (Test-Path test-summary.json) { (Get-Content test-summary.json | ConvertFrom-Json).skipped } else { "N/A" })
+            - 🔨 Broken: 0
+            - Pass Rate: $(if (Test-Path test-summary.json) { (Get-Content test-summary.json | ConvertFrom-Json).passRate }% else { "N/A" })
+            - Total Duration: $(if (Test-Path test-summary.json) { (Get-Content test-summary.json | ConvertFrom-Json).totalDuration } else { "N/A" })s
 
             **Test Suites:**
-            - Authentication Tests (6 tests)
-            - End-to-End Tests (3 tests)
-            - Framework Verification (2 tests)
+            - Authentication Tests (6 cases): PASSED ✅
+            - End-to-End Tests (3 cases): PASSED ✅
+            - Framework Verification (2 cases): PASSED ✅
 
-            **Artifacts:**
-            - Test Report: Available in Actions artifacts
-            - Screenshots: On failure only
-            - Videos: On failure only
+            **Artifacts Generated:**
+            - ✓ Playwright Report (HTML)
+            - ✓ Test Screenshots
+            - ✓ Test Videos
+            - ✓ Test Results JSON
+
+            **Key Information:**
+            - Test Framework: Playwright v1.44.0
+            - Language: TypeScript v5.9.3
+            - Browser: Chromium
+            - Test Site: Sauce Demo (https://www.saucedemo.com)
+            - OS: Windows Latest
+            - Node.js: v18
+
+            **Artifacts Retention:**
+            - Playwright Report: 30 days
+            - Test Videos: 7 days
+            - Test Artifacts: 30 days
 
             **Next Steps:**
-            1. Review test results in GitHub Actions
-            2. Download artifacts for detailed analysis
-            3. Check pull request comments for inline results
+            1. Review detailed Playwright HTML Report (attached)
+            2. Download artifacts from GitHub Actions
+            3. Check pull request comments for inline results (if PR)
+            4. All test logs available in Actions console
 
             ---
-            Build triggered by: ${{ github.event_name }}
-            View full pipeline: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+            **View Full Pipeline:** 
+            ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
+            **Download Artifacts:**
+            ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts
+
+            Build Status: SUCCESS ✅
+            Deployment Ready: YES 🚀
 
       - name: Send email notification on failure
         if: failure()
@@ -135,6 +179,10 @@ jobs:
           subject: "❌ Playwright Tests FAILED - Pipeline #${{ github.run_number }}"
           to: HussainBasha.Shaik257@outlook.com
           from: "GitHub Actions <playwright-tests@github.com>"
+          attachments: |
+            playwright-report/
+            test-results/
+            test-summary.json
           body: |
             ⚠️ **Playwright Test Pipeline Execution Summary**
 
@@ -143,24 +191,70 @@ jobs:
             **Pipeline Details:**
             - Repository: ${{ github.repository }}
             - Branch: ${{ github.ref_name }}
-            - Commit: ${{ github.sha }}
-            - Author: ${{ github.actor }}
+            - Triggered By: ${{ github.actor }}
+            - Commit SHA: ${{ github.sha }}
             - Run ID: #${{ github.run_number }}
+            - Triggered On: ${{ github.event_name }}
+            - Timestamp: $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss UTC')
+
+            **Test Execution Metrics:**
+            - Total Test Cases: $(if (Test-Path test-summary.json) { (Get-Content test-summary.json | ConvertFrom-Json).totalTests } else { "N/A" })
+            - ✅ Passed: $(if (Test-Path test-summary.json) { (Get-Content test-summary.json | ConvertFrom-Json).passed } else { "N/A" })
+            - ❌ Failed: $(if (Test-Path test-summary.json) { (Get-Content test-summary.json | ConvertFrom-Json).failed } else { "N/A" })
+            - ⏭️ Skipped: $(if (Test-Path test-summary.json) { (Get-Content test-summary.json | ConvertFrom-Json).skipped } else { "N/A" })
+            - 🔨 Broken: $(if (Test-Path test-summary.json) { (Get-Content test-summary.json | ConvertFrom-Json).broken } else { "N/A" })
+            - Pass Rate: $(if (Test-Path test-summary.json) { (Get-Content test-summary.json | ConvertFrom-Json).passRate }% else { "N/A" })
+            - Total Duration: $(if (Test-Path test-summary.json) { (Get-Content test-summary.json | ConvertFrom-Json).totalDuration } else { "N/A" })s
+
+            **Failed Test Cases:**
+            $(if (Test-Path test-summary.json) { $summary = Get-Content test-summary.json | ConvertFrom-Json; $summary.failedTests | ForEach-Object { "- ❌ $($_.suite): $($_.title)" } | Out-String } else { "Check test summary for details" })
 
             **What to Do:**
-            1. Check the failed tests in GitHub Actions
-            2. Review screenshots and videos in artifacts
-            3. Check error messages in the test report
-            4. Download full logs from the run
+            1. ⚠️ Review the failed tests in the attached HTML report
+            2. 📸 Check screenshots in test-results/ artifacts
+            3. 🎥 Review video recordings for failed tests
+            4. 📋 Read error messages in test-summary.json
+            5. 🔍 Check the full logs in Actions console
+            6. 🐛 Run tests locally to reproduce: npm test
 
             **Debugging Steps:**
-            - Run tests locally: npm test
-            - Run in debug mode: npx playwright test --debug
-            - Generate trace: npx playwright test --trace on
-            - View trace: npx playwright show-trace trace.zip
+            1. Run tests locally: npm test
+            2. Run in debug mode: npx playwright test --debug
+            3. Generate trace: npx playwright test --trace on
+            4. View trace: npx playwright show-trace trace.zip
+
+            **Key Information:**
+            - Test Framework: Playwright v1.44.0
+            - Language: TypeScript v5.9.3
+            - Browser: Chromium
+            - Test Site: Sauce Demo (https://www.saucedemo.com)
+            - OS: Windows Latest
+            - Node.js: v18
+
+            **Artifacts Available:**
+            - Playwright Report (HTML) - 30 days
+            - Test Videos - 7 days
+            - Test Screenshots - On failure
+            - Test Summary (JSON) - For metrics
+
+            **Quick Fixes to Try:**
+            1. Update selectors if UI changed: npm run test:ui
+            2. Clear cache: npm run clean
+            3. Reinstall dependencies: npm ci
+            4. Update Playwright: npm update @playwright/test
 
             ---
-            View full pipeline: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+            **View Full Pipeline:** 
+            ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
-            Artifacts available for 7 days
+            **Download Artifacts:**
+            ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts
+
+            **Test Report Link:**
+            ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}/attempts/1
+
+            Build Status: FAILED ❌
+            Action Required: YES ⚠️
+
+            Please investigate and fix the failing tests.
 

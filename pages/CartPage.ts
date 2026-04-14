@@ -60,20 +60,30 @@ export class CartPage extends BasePage {
   }
 
   async getSubtotal(): Promise<string | null> {
-    return await this.subtotalPrice.textContent();
+    // Wait for the summary section to be visible
+    await this.subtotalPrice.waitFor({ state: 'visible', timeout: 5000 }).catch(() => {});
+    return await this.subtotalPrice.textContent().catch(() => null);
   }
 
   async getTax(): Promise<string | null> {
-    return await this.taxPrice.textContent();
+    // Wait for the summary section to be visible
+    await this.taxPrice.waitFor({ state: 'visible', timeout: 5000 }).catch(() => {});
+    return await this.taxPrice.textContent().catch(() => null);
   }
 
   async getTotal(): Promise<string | null> {
-    return await this.totalPrice.textContent();
+    // Wait for the summary section to be visible
+    await this.totalPrice.waitFor({ state: 'visible', timeout: 5000 }).catch(() => {});
+    return await this.totalPrice.textContent().catch(() => null);
   }
 
   async proceedToCheckout(): Promise<void> {
+    // Make sure the checkout button is clickable
+    await this.checkoutButton.waitFor({ state: 'visible', timeout: 5000 });
+    // Scroll into view to ensure it's clickable
+    await this.checkoutButton.scrollIntoViewIfNeeded();
     await this.checkoutButton.click();
-    await this.page.waitForLoadState("networkidle");
+    await this.page.waitForLoadState("networkidle").catch(() => {});
   }
 
   async continueShopping_click(): Promise<void> {

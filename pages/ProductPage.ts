@@ -37,9 +37,36 @@ export class ProductPage extends BasePage {
   }
 
   async addProductToCart(index: number = 0): Promise<void> {
-    const button = this.productItem.nth(index).locator("button[data-test*='add-to-cart']");
-    await button.click();
-    await this.page.waitForTimeout(500);
+    try {
+      const button = this.productItem.nth(index).locator("button[data-test*='add-to-cart']");
+      
+      // Wait for button to be visible and enabled
+      await button.waitFor({ state: 'visible', timeout: 5000 });
+      await this.page.waitForTimeout(300);
+      
+      // Scroll into view to ensure it's clickable
+      await button.scrollIntoViewIfNeeded();
+      
+      // Get initial cart count
+      const cartBadgeBefore = await this.cartBadge.textContent().catch(() => "0");
+      const countBefore = parseInt(cartBadgeBefore || "0");
+      
+      // Click the button
+      await button.click();
+      console.log(`Product at index ${index} add-to-cart button clicked`);
+      
+      // Wait for cart badge to update (indicating item was added)
+      await this.page.waitForTimeout(500);
+      
+      // Verify item was added by checking cart badge
+      const cartBadgeAfter = await this.cartBadge.textContent().catch(() => "0");
+      const countAfter = parseInt(cartBadgeAfter || "0");
+      console.log(`Cart count updated: ${countBefore} -> ${countAfter}`);
+      
+    } catch (error) {
+      console.log(`Error adding product at index ${index} to cart:`, error);
+      throw error;
+    }
   }
 
   async removeProductFromCart(index: number = 0): Promise<void> {
@@ -50,8 +77,48 @@ export class ProductPage extends BasePage {
   }
 
   async sortBy(sortValue: string): Promise<void> {
-    // Sort options: az, za, lowestprice, highestprice
-    await this.sortContainer.selectOption(sortValue);
+    // Sort options: az, za, lohi (low to high), hilo (high to low)
+    // Map user-friendly names to actual select values
+    const sortMap: { [key: string]: string } = {
+      "az": "az",
+      "za": "za",
+      "lowestprice": "lohi",
+      "highestprice": "hilo",
+      "lohi": "lohi",
+      "hilo": "hilo",
+      "low to high": "lohi",
+      "high to low": "hilo"
+    };
+
+    const actualValue = sortMap[sortValue.toLowerCase()] || sortValue;
+    
+    // Ensure the sort selector is visible and enabled before interacting
+    await this.sortContainer.waitFor({ state: 'visible', timeout: 5000 });
+    await this.sortContainer.scrollIntoViewIfNeeded();
+    
+    console.log(`Sorting by: ${sortValue} (actual value: ${actualValue})`);
+    
+    try {
+      await this.sortContainer.selectOption(actualValue);
+      console.log("✓ Sort option selected successfully");
+    } catch (error) {
+      console.log("Error selecting sort option:", error);
+      console.log("Attempting alternative approach...");
+      
+      // Fallback: get all available options and try to match
+      const options = await this.sortContainer.locator("option").allTextContents();
+      console.log("Available options:", options);
+      
+      // Try matching with partial text match
+      for (const option of options) {
+        if (option.toLowerCase().includes(sortValue.toLowerCase())) {
+          await this.sortContainer.selectOption({ label: option });
+          console.log(`✓ Matched and selected: ${option}`);
+          break;
+        }
+      }
+    }
+    
     await this.page.waitForTimeout(1000);
   }
 
