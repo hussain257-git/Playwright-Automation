@@ -1,0 +1,42 @@
+{
+  "validUsers": [
+    {
+      "email": "standard_user",
+      "password": "secret_sauce",
+      "firstName": "Standard",
+      "lastName": "User"
+    },
+    {
+      "email": "problem_user",
+      "password": "secret_sauce",
+      "firstName": "Problem",
+      "lastName": "User"
+    },
+    {
+      "email": "performance_glitch_user",
+      "password": "secret_sauce",
+      "firstName": "Performance",
+      "lastName": "User"
+    }
+  ],
+  "invalidUsers": [
+    {
+      "email": "locked_out_user",
+      "password": "secret_sauce",
+      "expectedError": "locked out"
+    }
+  ],
+  "shippingAddresses": [
+    {
+      "firstName": "John",
+      "lastName": "Doe",
+      "zipCode": "12345"
+    },
+    {
+      "firstName": "Jane",
+      "lastName": "Smith",
+      "zipCode": "54321"
+    }
+  ]
+}
+

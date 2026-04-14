@@ -1,0 +1,36 @@
+{
+  "name": "ecommerce-test-automation",
+  "version": "1.0.0",
+  "description": "Production-grade E-Commerce test automation framework using Playwright",
+  "main": "index.js",
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:ui": "playwright test --ui",
+    "test:debug": "playwright test --debug",
+    "test:chromium": "playwright test --project=chromium",
+    "test:firefox": "playwright test --project=firefox",
+    "test:webkit": "playwright test --project=webkit",
+    "test:mobile": "playwright test --project=mobile",
+    "test:auth": "playwright test tests/auth",
+    "test:products": "playwright test tests/products",
+    "test:cart": "playwright test tests/cart",
+    "test:checkout": "playwright test tests/checkout",
+    "report": "playwright show-report",
+    "codegen": "playwright codegen https://www.saucedemo.com"
+  },
+  "keywords": [
+    "playwright",
+    "automation",
+    "testing",
+    "e2e",
+    "typescript"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.44.0",
+    "@types/node": "^20.19.39",
+    "typescript": "^5.9.3"
+  }
+}
