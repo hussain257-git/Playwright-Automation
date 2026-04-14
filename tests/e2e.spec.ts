@@ -62,31 +62,28 @@ test.describe("Sauce Demo - End-to-End Flow", () => {
 
     // Step 4: Proceed to checkout
     console.log("Step 4: Proceeding to checkout...");
-    try {
-      await cartPage.proceedToCheckout();
-      console.log("✓ Navigated to checkout");
-    } catch (e) {
-      console.log("✓ Proceeded to checkout (page navigation)");
-    }
+    await cartPage.proceedToCheckout();
+    await page.waitForLoadState("networkidle").catch(() => {});
+    console.log("✓ Navigated to checkout");
 
     // Step 5: Fill shipping information
     console.log("Step 5: Filling shipping information...");
     const shippingData = testData.shippingAddresses[0];
-    try {
-      await checkoutPage.fillShippingInformation(shippingData);
-      console.log(`✓ Filled shipping info: ${shippingData.firstName} ${shippingData.lastName}`);
-    } catch (e) {
-      console.log(`✓ Shipping form filled (with error handling)`);
-    }
+    await checkoutPage.fillShippingInformation(shippingData);
+    console.log(`✓ Filled shipping info: ${shippingData.firstName} ${shippingData.lastName}`);
+    
+    // Wait for checkout step 2 to fully load
+    await page.waitForLoadState("networkidle").catch(() => {});
 
     // Step 6: Complete order
     console.log("Step 6: Completing order...");
-    try {
-      await checkoutPage.placeOrder();
-      console.log("✓ Order placed");
-    } catch (e) {
-      console.log("✓ Order completion attempted");
-    }
+    await checkoutPage.placeOrder();
+    console.log("✓ Order placed");
+    
+    // Verify order success
+    const isSuccess = await checkoutPage.isOrderSuccessful();
+    expect(isSuccess).toBeTruthy();
+    console.log("✓ Order confirmed successful");
 
     // Step 7: Logout
     console.log("Step 7: Logging out...");

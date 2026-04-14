@@ -28,57 +28,56 @@ export class CheckoutPage extends BasePage {
 
   constructor(page: Page) {
     super(page);
-    // Sauce Demo checkout page locators
-    this.firstNameInput = page.locator("#first-name");
-    this.lastNameInput = page.locator("#last-name");
-    this.emailInput = page.locator("#postal-code");
+    // Sauce Demo checkout page locators - Step One (Shipping Info)
+    this.firstNameInput = page.locator("[data-test='firstName']");
+    this.lastNameInput = page.locator("[data-test='lastName']");
+    this.zipCodeInput = page.locator("[data-test='postalCode']");
+    
+    // Checkout buttons
+    this.placeOrderButton = page.locator("[data-test='finish']");
+    this.backToCart = page.locator("[data-test='cancel']");
+    
+    // Not used in Sauce Demo (but keep for compatibility)
+    this.emailInput = page.locator("#email");
     this.phoneInput = page.locator("#phone");
     this.addressInput = page.locator("#address");
     this.cityInput = page.locator("#city");
     this.stateInput = page.locator("#state");
-    this.zipCodeInput = page.locator("#postal-code");
-    this.countrySelect = page.locator("select");
-
-    // Payment Information
+    this.countrySelect = page.locator("select[name='country']");
     this.cardNumberInput = page.locator('input[name="cardNumber"]');
     this.cardExpiryInput = page.locator('input[name="expiry"]');
     this.cardCVVInput = page.locator('input[name="cvv"]');
     this.cardholderNameInput = page.locator('input[name="cardholderName"]');
     this.paymentMethodSelect = page.locator('select[name="paymentMethod"]');
-
-    // Other
     this.shippingMethodSelect = page.locator('select[name="shippingMethod"]');
     this.billingAddressCheckbox = page.locator('input[name="billingAddress"]');
     this.termsCheckbox = page.locator('input[name="terms"]');
-    this.placeOrderButton = page.locator("#finish");
-    this.successMessage = page.locator("text=Thank you for your order");
-    this.orderNumber = page.locator(".order-id");
-    this.backToCart = page.locator("#cancel");
+    this.successMessage = page.locator(".complete-header");
+    this.orderNumber = page.locator(".complete-text");
     this.orderSummary = page.locator(".checkout_summary_container");
   }
 
   async navigateToCheckout(): Promise<void> {
     await this.page.goto("https://www.saucedemo.com/checkout-step-one.html");
-    await this.page.waitForLoadState("networkidle");
+    await this.page.waitForLoadState("networkidle").catch(() => {});
   }
 
   async fillShippingInformation(shippingData: {
     firstName: string;
     lastName: string;
-    email?: string;
-    phone?: string;
-    address?: string;
-    city?: string;
-    state?: string;
     zipCode: string;
-    country?: string;
   }): Promise<void> {
+    // Fill shipping information on Sauce Demo checkout step one
     await this.firstNameInput.fill(shippingData.firstName);
     await this.lastNameInput.fill(shippingData.lastName);
     await this.zipCodeInput.fill(shippingData.zipCode);
-    // Continue to next step
-    await this.page.locator("#continue").click();
-    await this.page.waitForLoadState("networkidle");
+    
+    // Click continue button
+    const continueButton = this.page.locator("[data-test='continue']");
+    await continueButton.click();
+    
+    // Wait for step two to load
+    await this.page.waitForLoadState("networkidle").catch(() => {});
   }
 
   async selectShippingMethod(method: string): Promise<void> {
@@ -107,12 +106,21 @@ export class CheckoutPage extends BasePage {
   }
 
   async placeOrder(): Promise<void> {
-    await this.placeOrderButton.click();
-    await this.page.waitForLoadState("networkidle");
+    // The Finish button completes the order on checkout step two
+    const finishButton = this.page.locator("[data-test='finish']");
+    await finishButton.click();
+    
+    // Wait for order completion page to load
+    await this.page.waitForLoadState("networkidle").catch(() => {});
+    
+    // Wait a bit for success message to appear
+    await this.page.waitForTimeout(1000);
   }
 
   async isOrderSuccessful(): Promise<boolean> {
-    return await this.successMessage.isVisible().catch(() => false);
+    // Check for complete header which shows on successful order
+    const completePage = await this.page.locator(".complete-container").isVisible().catch(() => false);
+    return completePage;
   }
 
   async getOrderNumber(): Promise<string> {
