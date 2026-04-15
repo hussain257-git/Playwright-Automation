@@ -5,6 +5,7 @@ on:
     branches: [ main, develop, feature/* ]
   pull_request:
     branches: [ main, develop ]
+  workflow_dispatch:  # Enables manual trigger from GitHub Actions UI
   schedule:
     - cron: '0 0 * * *'   # 12:00 AM UTC
     - cron: '0 6 * * *'   # 06:00 AM UTC
@@ -130,13 +131,13 @@ jobs:
         continue-on-error: true
         uses: dawidd6/action-send-mail@v3
         with:
-          server_address: smtp-mail.outlook.com
+          server_address: smtp.gmail.com
           server_port: 587
-          username: ${{ secrets.EMAIL_USERNAME }}
-          password: ${{ secrets.EMAIL_PASSWORD }}
+          username: ${{ secrets.GMAIL_USERNAME }}
+          password: ${{ secrets.GMAIL_PASSWORD }}
           subject: "✅ [Playwright E2E] PASSED | ${{ steps.parse.outputs.passed }}/${{ steps.parse.outputs.total }} Tests | Pass Rate: ${{ steps.parse.outputs.pass_rate }} | SauceDemo | Run #${{ github.run_number }} | Branch: ${{ github.ref_name }}"
           to: HussainBasha.Shaik257@outlook.com
-          from: ${{ secrets.EMAIL_USERNAME }}
+          from: ${{ secrets.GMAIL_USERNAME }}
           attachments: playwright-report.zip
           html_body: |
             <html><body style="font-family:Arial,sans-serif;background:#f5f5f5;padding:0;margin:0">
@@ -207,13 +208,13 @@ jobs:
         continue-on-error: true
         uses: dawidd6/action-send-mail@v3
         with:
-          server_address: smtp-mail.outlook.com
+          server_address: smtp.gmail.com
           server_port: 587
-          username: ${{ secrets.EMAIL_USERNAME }}
-          password: ${{ secrets.EMAIL_PASSWORD }}
+          username: ${{ secrets.GMAIL_USERNAME }}
+          password: ${{ secrets.GMAIL_PASSWORD }}
           subject: "❌ [Playwright E2E] FAILED | ${{ steps.parse.outputs.failed }} Failed, ${{ steps.parse.outputs.passed }} Passed / ${{ steps.parse.outputs.total }} Total | Pass Rate: ${{ steps.parse.outputs.pass_rate }} | SauceDemo | Run #${{ github.run_number }} | Branch: ${{ github.ref_name }}"
           to: HussainBasha.Shaik257@outlook.com
-          from: ${{ secrets.EMAIL_USERNAME }}
+          from: ${{ secrets.GMAIL_USERNAME }}
           attachments: playwright-report.zip
           html_body: |
             <html><body style="font-family:Arial,sans-serif;background:#f5f5f5;padding:0;margin:0">
