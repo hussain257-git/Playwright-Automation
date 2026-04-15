@@ -258,6 +258,23 @@ gh run watch                                      # Live-tail the current run
 
 ---
 
-## 📜 License
+## �‍💻 About the Author
+
+I'm a passionate QA automation engineer with a strong drive to continuously learn, build, and ship things that work in the real world — not just scripts that run on a local machine.
+
+This framework is a reflection of that mindset. It started as a basic test suite and evolved into a production-grade automation framework with:
+- A proper CI/CD pipeline that runs 4× a day and emails results automatically
+- Storage state for session reuse — because every second counts in a real pipeline
+- TypeScript strict mode enforced — because quality starts at the code level
+- Clean architecture (POM, fixtures, JSON test data) — because maintainability matters
+
+**On leveraging AI in this age:**
+We're in the middle of an AI revolution, and I believe the best engineers are those who know how to use AI tools as force multipliers — not shortcuts. Throughout building this framework, I've used AI-assisted development to accelerate learning, explore best practices, debug faster, and write better code. The goal isn't to let AI do the work — it's to use AI to do *more* and learn *deeper*, faster than was ever possible before.
+
+> *"The best automation engineer isn't the one who knows everything — it's the one who never stops building."*
+
+---
+
+## �📜 License
 
 MIT — free to use for learning and interview preparation.
