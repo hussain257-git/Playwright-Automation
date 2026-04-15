@@ -1,24 +1,20 @@
 import { test, expect } from "@playwright/test";
-import { LoginPage } from "../pages/LoginPage";
 import { ProductPage } from "../pages/ProductPage";
 import { CartPage } from "../pages/CartPage";
 
 const BASE_URL = "https://www.saucedemo.com";
 
-test.describe("Cart Page Validation", () => {
-  let loginPage: LoginPage;
+test.describe("Cart Page Validation", { tag: ["@regression", "@cart"] }, () => {
   let productPage: ProductPage;
   let cartPage: CartPage;
 
   test.beforeEach(async ({ page }) => {
-    loginPage = new LoginPage(page);
     productPage = new ProductPage(page);
     cartPage = new CartPage(page);
-    await page.goto(BASE_URL);
-    await loginPage.login("standard_user", "secret_sauce");
+    await page.goto(`${BASE_URL}/inventory.html`);
   });
 
-  test("TC-010: Items added to cart persist when navigating to cart page", async () => {
+  test("TC-010: Items added to cart persist when navigating to cart page", { tag: ["@smoke"] }, async () => {
     await productPage.addProductToCart(0);
     await productPage.addProductToCart(1);
     await cartPage.goto();

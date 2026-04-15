@@ -1,22 +1,17 @@
 import { test, expect } from "@playwright/test";
-import { LoginPage } from "../pages/LoginPage";
 import { ProductPage } from "../pages/ProductPage";
 
 const BASE_URL = "https://www.saucedemo.com";
 
-test.describe("Product Listing Page (Inventory)", () => {
-  let loginPage: LoginPage;
+test.describe("Product Listing Page (Inventory)", { tag: ["@regression", "@inventory"] }, () => {
   let productPage: ProductPage;
 
   test.beforeEach(async ({ page }) => {
-    loginPage = new LoginPage(page);
     productPage = new ProductPage(page);
-    await page.goto(BASE_URL);
-    await loginPage.login("standard_user", "secret_sauce");
-    expect(page.url()).toContain("/inventory.html");
+    await page.goto(`${BASE_URL}/inventory.html`);
   });
 
-  test("TC-006: Verify at least 6 products are displayed", async () => {
+  test("TC-006: Verify at least 6 products are displayed", { tag: ["@smoke"] }, async () => {
     const count = await productPage.getProductCount();
     expect(count).toBeGreaterThanOrEqual(6);
   });

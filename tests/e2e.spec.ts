@@ -1,18 +1,16 @@
 ﻿import { test, expect } from "@playwright/test";
-import { LoginPage } from "../pages/LoginPage";
 import { ProductPage } from "../pages/ProductPage";
 import { CartPage } from "../pages/CartPage";
 import { CheckoutPage } from "../pages/CheckoutPage";
+import { checkout } from "../test-data/test-data";
 
-test.describe("E2E-001:Complete Purchase", () => {
-  test("Complete purchase flow", async ({ page }) => {
-    const loginPage = new LoginPage(page);
+test.describe("E2E-001:Complete Purchase", { tag: ["@regression", "@e2e", "@checkout"] }, () => {
+  test("Complete purchase flow", { tag: ["@smoke"] }, async ({ page }) => {
     const productPage = new ProductPage(page);
     const cartPage = new CartPage(page);
     const checkoutPage = new CheckoutPage(page);
 
-    await page.goto("https://www.saucedemo.com");
-    await loginPage.login("standard_user", "secret_sauce");
+    await page.goto("https://www.saucedemo.com/inventory.html");
     expect(page.url()).toContain("inventory");
 
     const cntProducts = await productPage.getProductCount();
@@ -28,7 +26,7 @@ test.describe("E2E-001:Complete Purchase", () => {
     expect(cntCart).toBe(2);
 
     await cartPage.checkout();
-    await checkoutPage.fillUserInfo("John", "Doe", "12345");
+    await checkoutPage.fillUserInfo(checkout.validAddress.firstName, checkout.validAddress.lastName, checkout.validAddress.zipCode);
     await checkoutPage.continueCheckout();
     await checkoutPage.completeOrder();
 
@@ -37,14 +35,12 @@ test.describe("E2E-001:Complete Purchase", () => {
   });
 });
 
-test.describe("E2E-002: Browse and Add to Cart", () => {
+test.describe("E2E-002: Browse and Add to Cart", { tag: ["@regression", "@e2e", "@cart"] }, () => {
   test("Add multiple products and verify cart", async ({ page }) => {
-    const loginPage = new LoginPage(page);
     const productPage = new ProductPage(page);
     const cartPage = new CartPage(page);
 
-    await page.goto("https://www.saucedemo.com");
-    await loginPage.login("standard_user", "secret_sauce");
+    await page.goto("https://www.saucedemo.com/inventory.html");
     expect(page.url()).toContain("inventory");
 
     // Verify products are displayed
@@ -77,14 +73,12 @@ test.describe("E2E-002: Browse and Add to Cart", () => {
   });
 });
 
-test.describe("E2E-003: Remove Items from Cart", () => {
+test.describe("E2E-003: Remove Items from Cart", { tag: ["@regression", "@e2e", "@cart"] }, () => {
   test("Add items then remove one and verify count", async ({ page }) => {
-    const loginPage = new LoginPage(page);
     const productPage = new ProductPage(page);
     const cartPage = new CartPage(page);
 
-    await page.goto("https://www.saucedemo.com");
-    await loginPage.login("standard_user", "secret_sauce");
+    await page.goto("https://www.saucedemo.com/inventory.html");
 
     // Add 3 products
     await productPage.addProductToCart(0);

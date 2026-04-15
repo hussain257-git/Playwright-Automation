@@ -2,6 +2,7 @@ import { defineConfig, devices } from "@playwright/test";
 
 export default defineConfig({
   testDir: "./tests",
+  globalSetup: "./tests/global-setup",  // Login once, reuse session for all tests
   timeout: 60_000,  // Increased from 30s to 60s for Sauce Demo
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 4 : 2,  // Parallel execution: 4 workers on CI, 2 locally
@@ -15,6 +16,7 @@ export default defineConfig({
   ],
   use:{
     baseURL: process.env.BASE_URL || "https://www.saucedemo.com",
+    storageState: "auth.json",  // Reuse saved login session — no UI login per test
     trace: "on-first-retry",
     screenshot: "only-on-failure",
     video: "retain-on-failure",

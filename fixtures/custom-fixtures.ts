@@ -34,9 +34,8 @@ export const test = base.extend<PageFixtures>({
   },
 
   authenticatedPage: async ({ page }, use) => {
-    const loginPage = new LoginPage(page);
-    await page.goto("https://www.saucedemo.com");
-    await loginPage.login("standard_user", "secret_sauce");
+    // Storage state already applied — just navigate to the app
+    await page.goto("https://www.saucedemo.com/inventory.html");
     await use(page);
   },
 });

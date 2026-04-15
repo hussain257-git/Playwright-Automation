@@ -30,9 +30,9 @@ export class BasePage {
 
   async getText(locator: Locator | string): Promise<string> {
     if (typeof locator === "string") {
-      return await this.page.textContent(locator);
+      return (await this.page.textContent(locator)) ?? "";
     }
-    return await locator.textContent();
+    return (await locator.textContent()) ?? "";
   }
 
   async isVisible(locator: Locator | string): Promise<boolean> {
@@ -52,7 +52,7 @@ export class BasePage {
 
   async waitForNavigation(action: () => Promise<void>): Promise<void> {
     await Promise.all([
-      this.page.waitForNavigation(),
+      this.page.waitForURL("**/*"),
       action(),
     ]);
   }

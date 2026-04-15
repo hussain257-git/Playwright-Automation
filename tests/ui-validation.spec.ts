@@ -1,16 +1,13 @@
 import { test, expect } from "@playwright/test";
-import { LoginPage } from "../pages/LoginPage";
 
 const BASE_URL = "https://www.saucedemo.com";
 
-test.describe("UI/UX Validation", () => {
+test.describe("UI/UX Validation", { tag: ["@regression", "@ui"] }, () => {
   test.beforeEach(async ({ page }) => {
-    const loginPage = new LoginPage(page);
-    await page.goto(BASE_URL);
-    await loginPage.login("standard_user", "secret_sauce");
+    await page.goto(`${BASE_URL}/inventory.html`);
   });
 
-  test("TC-016: App logo is visible on inventory page", async ({ page }) => {
+  test("TC-016: App logo is visible on inventory page", { tag: ["@smoke"] }, async ({ page }) => {
     const logo = page.locator(".app_logo");
     await expect(logo).toBeVisible();
     expect(await logo.textContent()).toContain("Swag Labs");

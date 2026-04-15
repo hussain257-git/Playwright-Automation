@@ -17,6 +17,7 @@ test-results.json
 
 # Playwright
 .playwright/
+auth.json
 
 # IDE
 .vscode/

@@ -3,17 +3,15 @@ import { LoginPage } from "../pages/LoginPage";
 
 const BASE_URL = "https://www.saucedemo.com";
 
-test.describe("Logout Functionality", () => {
+test.describe("Logout Functionality", { tag: ["@regression", "@login"] }, () => {
   let loginPage: LoginPage;
 
   test.beforeEach(async ({ page }) => {
     loginPage = new LoginPage(page);
-    await page.goto(BASE_URL);
-    await loginPage.login("standard_user", "secret_sauce");
-    expect(page.url()).toContain("/inventory.html");
+    await page.goto(`${BASE_URL}/inventory.html`);
   });
 
-  test("TC-014: Logout from burger menu redirects to login page", async ({ page }) => {
+  test("TC-014: Logout from burger menu redirects to login page", { tag: ["@smoke"] }, async ({ page }) => {
     await loginPage.logout();
     expect(page.url()).not.toContain("/inventory.html");
     // Verify login button is visible again

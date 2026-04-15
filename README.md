@@ -4,7 +4,7 @@
 [![Node.js](https://img.shields.io/badge/Node.js-18%2B-green)](https://nodejs.org/)
 [![Playwright](https://img.shields.io/badge/Playwright-Latest-blue)](https://playwright.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue)](https://www.typescriptlang.org/)
-[![Tests](https://img.shields.io/badge/Tests-32%20Passing-brightgreen)]()
+[![Tests](https://img.shields.io/badge/Tests-27%20Passing-brightgreen)]()
 [![License](https://img.shields.io/badge/License-MIT-yellow)]()
 
 > Production-ready end-to-end test automation framework for [SauceDemo](https://www.saucedemo.com) built with Playwright + TypeScript, featuring a full CI/CD pipeline with automated email reporting.
@@ -13,30 +13,34 @@
 
 ## ✨ Features
 
-- ✅ **32 Automated Tests** — Full coverage across Login, Cart, Checkout, UI, Logout & Negative cases
+- ✅ **27 Automated Tests** — Full coverage across Login, Cart, Checkout, UI, Logout & Negative cases
 - ✅ **Page Object Model** — Clean, maintainable architecture (`LoginPage`, `ProductPage`, `CartPage`, `CheckoutPage`)
+- ✅ **Storage State Auth Reuse** — Global setup logs in once; all tests reuse `auth.json` (no UI login per test)
+- ✅ **Test Tagging** — `@smoke` (8 key tests), `@regression` (all), plus suite tags (`@login`, `@cart`, `@e2e`, etc.)
+- ✅ **JSON Test Data** — All credentials and checkout data in `test-data/users.json`, zero hardcoded strings in specs
+- ✅ **TypeScript Strict Mode** — `strict: true`, `noImplicitAny: true` — full type safety enforced
 - ✅ **GitHub Actions CI/CD** — Runs on every push, PR, schedule (4×/day), and manual trigger
 - ✅ **Parallel Execution** — 4 workers on CI, 2 locally for faster runs
 - ✅ **Email Notifications** — Rich HTML email with metrics table + Playwright report ZIP on every run
-- ✅ **TypeScript** — Full type safety across all test files and page objects
 - ✅ **Artifacts** — HTML report (30 days) + test videos (7 days) uploaded on every run
 - ✅ **Custom Fixtures** — Reusable test setup via `fixtures/custom-fixtures.ts`
 
 ---
 
-## 📊 Test Coverage — 32 Tests
+## 📊 Test Coverage — 27 Tests
 
-| # | Suite | Test IDs | Count | Status |
-|---|-------|----------|-------|--------|
-| 1 | **Login Functionality** | TC-001 → TC-005 | 5 | ✅ PASS |
-| 2 | **Inventory / Products** | TC-006 → TC-009 | 4 | ✅ PASS |
-| 3 | **Cart Validation** | TC-010 → TC-013 | 4 | ✅ PASS |
-| 4 | **Logout** | TC-014 → TC-015 | 2 | ✅ PASS |
-| 5 | **UI/UX Validation** | TC-016 → TC-020 | 5 | ✅ PASS |
-| 6 | **Negative / Edge Cases** | TC-021 → TC-024 | 4 | ✅ PASS |
-| 7 | **E2E Checkout Flow** | E2E-001 → E2E-003 | 3 | ✅ PASS |
-| 8 | **Auth (Login spec)** | Login scenarios | 5 | ✅ PASS |
-| — | **Total** | | **32** | **✅ All Passing** |
+| # | Suite | Test IDs | Count | Tag | Status |
+|---|-------|----------|-------|-----|--------|
+| 1 | **Login Functionality** | TC-001 → TC-005 | 5 | `@login` | ✅ PASS |
+| 2 | **Inventory / Products** | TC-006 → TC-009 | 4 | `@inventory` | ✅ PASS |
+| 3 | **Cart Validation** | TC-010 → TC-013 | 4 | `@cart` | ✅ PASS |
+| 4 | **Logout** | TC-014 → TC-015 | 2 | `@login` | ✅ PASS |
+| 5 | **UI/UX Validation** | TC-016 → TC-020 | 5 | `@ui` | ✅ PASS |
+| 6 | **Negative / Edge Cases** | TC-021 → TC-024 | 4 | `@negative` | ✅ PASS |
+| 7 | **E2E Flows** | E2E-001 → E2E-003 | 3 | `@e2e` | ✅ PASS |
+| — | **Total** | | **27** | `@regression` | **✅ All Passing** |
+
+> **Smoke suite** (`@smoke`): TC-001, TC-006, TC-010, TC-014, TC-016, TC-021, TC-024, E2E-001 — 8 critical path tests.
 
 ---
 
@@ -67,7 +71,7 @@ npx playwright test
 npx playwright show-report
 ```
 
-**Expected result:** 32 tests pass in ~2 minutes ✅
+**Expected result:** 27 tests pass in ~2 minutes ✅
 
 ---
 
@@ -89,12 +93,14 @@ Playwright_Automation/
 │   ├── auth/login.spec.ts
 │   ├── cart.spec.ts
 │   ├── e2e.spec.ts
+│   ├── global-setup.ts        # Login once → saves auth.json
 │   ├── inventory.spec.ts
 │   ├── logout.spec.ts
 │   ├── negative-cases.spec.ts
 │   └── ui-validation.spec.ts
 ├── test-data/
-│   └── users.json             # Test credentials
+│   ├── users.json             # All credentials + checkout data
+│   └── test-data.ts           # Typed helper (exports users, checkout)
 ├── playwright.config.ts       # Playwright configuration
 ├── tsconfig.json
 └── package.json
@@ -117,7 +123,7 @@ The GitHub Actions workflow (`.github/workflows/playwright-tests.yml`) runs on:
 
 ```
 Checkout → Setup Node.js 18 → npm ci → Install Playwright browsers
-  → Run 32 Tests (4 workers, parallel)
+  → Run 27 Tests (4 workers, parallel)
   → Parse results (passed/failed/flaky/duration/pass rate)
   → Zip Playwright report
   → Upload HTML report artifact (30 days)
@@ -139,8 +145,8 @@ Every pipeline run sends a rich HTML email to the configured inbox:
 
 **Email subject examples:**
 ```
-✅ [Playwright E2E] PASSED | 32/32 Tests | Pass Rate: 100% | SauceDemo | Run #17 | Branch: main
-❌ [Playwright E2E] FAILED | 2 Failed, 30 Passed / 32 Total | Pass Rate: 93.8% | SauceDemo | Run #18 | Branch: main
+✅ [Playwright E2E] PASSED | 27/27 Tests | Pass Rate: 100% | SauceDemo | Run #18 | Branch: main
+❌ [Playwright E2E] FAILED | 2 Failed, 25 Passed / 27 Total | Pass Rate: 92.6% | SauceDemo | Run #19 | Branch: main
 ```
 
 ---
@@ -173,24 +179,58 @@ All accounts work on `https://www.saucedemo.com`:
 
 ---
 
-## 🧪 Run Specific Tests
+## 🧪 Run Commands Cheatsheet
 
+### By tag (npm scripts)
 ```bash
-# Run a single spec file
+npm test                      # All 27 tests
+npm run test:smoke            # 8 critical-path tests (@smoke)
+npm run test:regression       # Full regression suite (all tests)
+npm run test:login            # Login + Logout specs (@login)
+npm run test:inventory        # Inventory/Products spec (@inventory)
+npm run test:cart             # Cart spec (@cart)
+npm run test:checkout         # Checkout + negative cases (@checkout)
+npm run test:e2e              # E2E flows (@e2e)
+npm run test:negative         # Negative edge cases (@negative)
+```
+
+### By file (run a whole spec)
+```bash
+npx playwright test tests/auth/login.spec.ts
 npx playwright test tests/e2e.spec.ts
+npx playwright test tests/cart.spec.ts
+npx playwright test tests/inventory.spec.ts
+npx playwright test tests/negative-cases.spec.ts
+```
 
-# Run by test ID/name
-npx playwright test --grep "TC-001"
-npx playwright test --grep "E2E-001"
+### By single test ID
+```bash
+npx playwright test --grep "TC-001"     # Single TC by ID
+npx playwright test --grep "E2E-001"    # Single E2E by ID
+npx playwright test --grep "TC-02"      # Range — matches TC-020 to TC-029
+```
 
-# Run in headed mode (watch the browser)
-npx playwright test --headed
+### Browser & debug modes
+```bash
+npx playwright test --headed            # Watch browser run
+npx playwright test --ui                # Interactive UI mode (recommended for demo)
+npx playwright test --debug             # Step through with DevTools
+npx playwright codegen https://www.saucedemo.com  # Record new tests
+```
 
-# Debug mode
-npx playwright test --debug
+### Reports
+```bash
+npm run report                          # Open last HTML report
+npx playwright show-report              # Same as above
+```
 
-# Run with UI mode
-npx playwright test --ui
+### Trigger GitHub Actions from terminal
+```bash
+# Requires GitHub CLI (gh auth login first)
+gh workflow run playwright-tests.yml              # Trigger on default branch
+gh workflow run playwright-tests.yml --ref main   # Trigger on main
+gh run list --workflow=playwright-tests.yml       # View recent runs
+gh run watch                                      # Live-tail the current run
 ```
 
 ---
