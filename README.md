@@ -1,4 +1,4 @@
-# Playwright SauceDemo E2E Automation Framework
+# 🎭 Playwright SauceDemo E2E Automation Framework
 
 [![CI/CD Pipeline](https://github.com/hussain257-git/Playwright-Automation/actions/workflows/playwright-tests.yml/badge.svg)](https://github.com/hussain257-git/Playwright-Automation/actions/workflows/playwright-tests.yml)
 [![Node.js](https://img.shields.io/badge/Node.js-18%2B-green)](https://nodejs.org/)
@@ -11,7 +11,7 @@
 
 ---
 
-## Features
+## ✨ Features
 
 - **27 Automated Tests** — Full coverage across Login, Cart, Checkout, UI, Logout & Negative cases
 - **Page Object Model** — Clean, maintainable architecture (`LoginPage`, `ProductPage`, `CartPage`, `CheckoutPage`)
@@ -27,7 +27,7 @@
 
 ---
 
-## Test Coverage — 27 Tests
+## 📊 Test Coverage — 27 Tests
 
 | # | Suite | Test IDs | Count | Tag | Status |
 |---|-------|----------|-------|-----|--------|
@@ -44,7 +44,7 @@
 
 ---
 
-## Quick Start
+## 🚀 Quick Start
 
 ### Prerequisites
 
@@ -75,7 +75,7 @@ npx playwright show-report
 
 ---
 
-## Project Structure
+## 🗂️ Project Structure
 
 ```
 Playwright_Automation/
@@ -108,7 +108,7 @@ Playwright_Automation/
 
 ---
 
-## CI/CD Pipeline
+## ⚙️ CI/CD Pipeline
 
 The GitHub Actions workflow (`.github/workflows/playwright-tests.yml`) runs on:
 
@@ -135,7 +135,7 @@ Checkout → Setup Node.js 18 → npm ci → Install Playwright browsers
 
 ---
 
-## Email Notifications
+## 📧 Email Notifications
 
 Every pipeline run sends a rich HTML email to the configured inbox:
 
@@ -152,7 +152,7 @@ Every pipeline run sends a rich HTML email to the configured inbox:
 
 ---
 
-## Test Credentials
+## 🔑 Test Credentials
 
 All accounts work on `https://www.saucedemo.com`:
 
@@ -165,7 +165,7 @@ All accounts work on `https://www.saucedemo.com`:
 
 ---
 
-## Playwright Configuration
+## 🛠️ Playwright Configuration
 
 | Setting | Value |
 |---------|-------|
@@ -180,7 +180,7 @@ All accounts work on `https://www.saucedemo.com`:
 
 ---
 
-## Run Commands Cheatsheet
+## 🧪 Run Commands Cheatsheet
 
 ### By tag (npm scripts)
 
@@ -242,7 +242,7 @@ gh run watch                                      # Live-tail the current run
 
 ---
 
-## Reports & Artifacts
+## 📈 Reports & Artifacts
 
 | Artifact | Retention | Contents |
 |----------|-----------|---------|
@@ -253,7 +253,7 @@ gh run watch                                      # Live-tail the current run
 
 ---
 
-## Technologies Used
+## 🔧 Technologies Used
 
 | Technology | Version | Purpose |
 |------------|---------|---------|
@@ -265,7 +265,7 @@ gh run watch                                      # Live-tail the current run
 
 ---
 
-## About the Author
+## 👨‍💻 About the Author
 
 Passionate QA automation engineer. Strong believer in building things right, not just fast.
 
@@ -281,7 +281,7 @@ This framework represents my approach to test engineering — treating automatio
 
 ---
 
-### Why Playwright — and why it's the right choice
+### 🎯 Why Playwright — and why it's the right choice
 
 Playwright isn't just a tool I picked — it's one I deliberately chose after understanding what makes modern web test automation hard, and what makes it fast.
 
@@ -316,7 +316,7 @@ Playwright isn't just a tool I picked — it's one I deliberately chose after un
 
 ---
 
-### On AI-augmented engineering
+### 🤖 On AI-augmented engineering
 
 We're at a point in history where the gap between a good engineer and a great one is how effectively they leverage AI. I use AI tools daily — to learn new patterns, validate architectural decisions, debug with context, and write cleaner TypeScript. The skill isn't in knowing everything. It's in knowing how to find the best answer, understand it fully, and apply it with precision.
 
@@ -326,7 +326,7 @@ The engineers who thrive in this era won't be those who avoid AI. They'll be tho
 
 ---
 
-## Roadmap — Planned Enhancements
+## 🗺️ Roadmap — Planned Enhancements
 
 This framework is actively evolving. Planned additions to make it a complete enterprise-grade QA platform:
 
@@ -347,6 +347,6 @@ This framework is actively evolving. Planned additions to make it a complete ent
 
 ---
 
-## License
+## 📜 License
 
 MIT — free to use for learning and interview preparation.
