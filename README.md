@@ -1,4 +1,4 @@
-# 🎭 Playwright SauceDemo E2E Automation Framework
+﻿# ðŸŽ­ Playwright SauceDemo E2E Automation Framework
 
 [![CI/CD Pipeline](https://github.com/hussain257-git/Playwright-Automation/actions/workflows/playwright-tests.yml/badge.svg)](https://github.com/hussain257-git/Playwright-Automation/actions/workflows/playwright-tests.yml)
 [![Node.js](https://img.shields.io/badge/Node.js-18%2B-green)](https://nodejs.org/)
@@ -11,40 +11,40 @@
 
 ---
 
-## ✨ Features
+## âœ¨ Features
 
-- ✅ **27 Automated Tests** — Full coverage across Login, Cart, Checkout, UI, Logout & Negative cases
-- ✅ **Page Object Model** — Clean, maintainable architecture (`LoginPage`, `ProductPage`, `CartPage`, `CheckoutPage`)
-- ✅ **Storage State Auth Reuse** — Global setup logs in once; all tests reuse `auth.json` (no UI login per test)
-- ✅ **Test Tagging** — `@smoke` (8 key tests), `@regression` (all), plus suite tags (`@login`, `@cart`, `@e2e`, etc.)
-- ✅ **JSON Test Data** — All credentials and checkout data in `test-data/users.json`, zero hardcoded strings in specs
-- ✅ **TypeScript Strict Mode** — `strict: true`, `noImplicitAny: true` — full type safety enforced
-- ✅ **GitHub Actions CI/CD** — Runs on every push, PR, schedule (4×/day), and manual trigger
-- ✅ **Parallel Execution** — 4 workers on CI, 2 locally for faster runs
-- ✅ **Email Notifications** — Rich HTML email with metrics table + Playwright report ZIP on every run
-- ✅ **Artifacts** — HTML report (30 days) + test videos (7 days) uploaded on every run
-- ✅ **Custom Fixtures** — Reusable test setup via `fixtures/custom-fixtures.ts`
+- âœ… **27 Automated Tests** â€” Full coverage across Login, Cart, Checkout, UI, Logout & Negative cases
+- âœ… **Page Object Model** â€” Clean, maintainable architecture (`LoginPage`, `ProductPage`, `CartPage`, `CheckoutPage`)
+- âœ… **Storage State Auth Reuse** â€” Global setup logs in once; all tests reuse `auth.json` (no UI login per test)
+- âœ… **Test Tagging** â€” `@smoke` (8 key tests), `@regression` (all), plus suite tags (`@login`, `@cart`, `@e2e`, etc.)
+- âœ… **JSON Test Data** â€” All credentials and checkout data in `test-data/users.json`, zero hardcoded strings in specs
+- âœ… **TypeScript Strict Mode** â€” `strict: true`, `noImplicitAny: true` â€” full type safety enforced
+- âœ… **GitHub Actions CI/CD** â€” Runs on every push, PR, schedule (4Ã—/day), and manual trigger
+- âœ… **Parallel Execution** â€” 4 workers on CI, 2 locally for faster runs
+- âœ… **Email Notifications** â€” Rich HTML email with metrics table + Playwright report ZIP on every run
+- âœ… **Artifacts** â€” HTML report (30 days) + test videos (7 days) uploaded on every run
+- âœ… **Custom Fixtures** â€” Reusable test setup via `fixtures/custom-fixtures.ts`
 
 ---
 
-## 📊 Test Coverage — 27 Tests
+## ðŸ“Š Test Coverage â€” 27 Tests
 
 | # | Suite | Test IDs | Count | Tag | Status |
 |---|-------|----------|-------|-----|--------|
-| 1 | **Login Functionality** | TC-001 → TC-005 | 5 | `@login` | ✅ PASS |
-| 2 | **Inventory / Products** | TC-006 → TC-009 | 4 | `@inventory` | ✅ PASS |
-| 3 | **Cart Validation** | TC-010 → TC-013 | 4 | `@cart` | ✅ PASS |
-| 4 | **Logout** | TC-014 → TC-015 | 2 | `@login` | ✅ PASS |
-| 5 | **UI/UX Validation** | TC-016 → TC-020 | 5 | `@ui` | ✅ PASS |
-| 6 | **Negative / Edge Cases** | TC-021 → TC-024 | 4 | `@negative` | ✅ PASS |
-| 7 | **E2E Flows** | E2E-001 → E2E-003 | 3 | `@e2e` | ✅ PASS |
-| — | **Total** | | **27** | `@regression` | **✅ All Passing** |
+| 1 | **Login Functionality** | TC-001 â†’ TC-005 | 5 | `@login` | âœ… PASS |
+| 2 | **Inventory / Products** | TC-006 â†’ TC-009 | 4 | `@inventory` | âœ… PASS |
+| 3 | **Cart Validation** | TC-010 â†’ TC-013 | 4 | `@cart` | âœ… PASS |
+| 4 | **Logout** | TC-014 â†’ TC-015 | 2 | `@login` | âœ… PASS |
+| 5 | **UI/UX Validation** | TC-016 â†’ TC-020 | 5 | `@ui` | âœ… PASS |
+| 6 | **Negative / Edge Cases** | TC-021 â†’ TC-024 | 4 | `@negative` | âœ… PASS |
+| 7 | **E2E Flows** | E2E-001 â†’ E2E-003 | 3 | `@e2e` | âœ… PASS |
+| â€” | **Total** | | **27** | `@regression` | **âœ… All Passing** |
 
-> **Smoke suite** (`@smoke`): TC-001, TC-006, TC-010, TC-014, TC-016, TC-021, TC-024, E2E-001 — 8 critical path tests.
+> **Smoke suite** (`@smoke`): TC-001, TC-006, TC-010, TC-014, TC-016, TC-021, TC-024, E2E-001 â€” 8 critical path tests.
 
 ---
 
-## 🚀 Quick Start
+## ðŸš€ Quick Start
 
 ### Prerequisites
 
@@ -71,44 +71,44 @@ npx playwright test
 npx playwright show-report
 ```
 
-**Expected result:** 27 tests pass in ~2 minutes ✅
+**Expected result:** 27 tests pass in ~2 minutes âœ…
 
 ---
 
-## 🏗️ Project Structure
+## ðŸ—ï¸ Project Structure
 
 ```
 Playwright_Automation/
-├── .github/workflows/
-│   └── playwright-tests.yml   # CI/CD pipeline
-├── fixtures/
-│   └── custom-fixtures.ts     # Reusable test fixtures
-├── pages/                     # Page Object Model
-│   ├── BasePage.ts
-│   ├── LoginPage.ts
-│   ├── ProductPage.ts
-│   ├── CartPage.ts
-│   └── CheckoutPage.ts
-├── tests/                     # All test specs
-│   ├── auth/login.spec.ts
-│   ├── cart.spec.ts
-│   ├── e2e.spec.ts
-│   ├── global-setup.ts        # Login once → saves auth.json
-│   ├── inventory.spec.ts
-│   ├── logout.spec.ts
-│   ├── negative-cases.spec.ts
-│   └── ui-validation.spec.ts
-├── test-data/
-│   ├── users.json             # All credentials + checkout data
-│   └── test-data.ts           # Typed helper (exports users, checkout)
-├── playwright.config.ts       # Playwright configuration
-├── tsconfig.json
-└── package.json
+â”œâ”€â”€ .github/workflows/
+â”‚   â””â”€â”€ playwright-tests.yml   # CI/CD pipeline
+â”œâ”€â”€ fixtures/
+â”‚   â””â”€â”€ custom-fixtures.ts     # Reusable test fixtures
+â”œâ”€â”€ pages/                     # Page Object Model
+â”‚   â”œâ”€â”€ BasePage.ts
+â”‚   â”œâ”€â”€ LoginPage.ts
+â”‚   â”œâ”€â”€ ProductPage.ts
+â”‚   â”œâ”€â”€ CartPage.ts
+â”‚   â””â”€â”€ CheckoutPage.ts
+â”œâ”€â”€ tests/                     # All test specs
+â”‚   â”œâ”€â”€ auth/login.spec.ts
+â”‚   â”œâ”€â”€ cart.spec.ts
+â”‚   â”œâ”€â”€ e2e.spec.ts
+â”‚   â”œâ”€â”€ global-setup.ts        # Login once â†’ saves auth.json
+â”‚   â”œâ”€â”€ inventory.spec.ts
+â”‚   â”œâ”€â”€ logout.spec.ts
+â”‚   â”œâ”€â”€ negative-cases.spec.ts
+â”‚   â””â”€â”€ ui-validation.spec.ts
+â”œâ”€â”€ test-data/
+â”‚   â”œâ”€â”€ users.json             # All credentials + checkout data
+â”‚   â””â”€â”€ test-data.ts           # Typed helper (exports users, checkout)
+â”œâ”€â”€ playwright.config.ts       # Playwright configuration
+â”œâ”€â”€ tsconfig.json
+â””â”€â”€ package.json
 ```
 
 ---
 
-## ⚙️ CI/CD Pipeline
+## âš™ï¸ CI/CD Pipeline
 
 The GitHub Actions workflow (`.github/workflows/playwright-tests.yml`) runs on:
 
@@ -116,55 +116,55 @@ The GitHub Actions workflow (`.github/workflows/playwright-tests.yml`) runs on:
 |---------|---------|
 | **Push** | `main`, `develop`, `feature/*` branches |
 | **Pull Request** | `main`, `develop` branches |
-| **Schedule** | 00:00, 06:00, 12:00, 18:00 UTC (4× daily) |
+| **Schedule** | 00:00, 06:00, 12:00, 18:00 UTC (4Ã— daily) |
 | **Manual** | "Run workflow" button on the Actions tab |
 
 ### Pipeline Steps
 
 ```
-Checkout → Setup Node.js 18 → npm ci → Install Playwright browsers
-  → Run 27 Tests (4 workers, parallel)
-  → Parse results (passed/failed/flaky/duration/pass rate)
-  → Zip Playwright report
-  → Upload HTML report artifact (30 days)
-  → Upload test videos artifact (7 days)
-  → Publish JUnit results
-  → Generate GitHub Step Summary
-  → Send HTML email (Gmail SMTP → Outlook inbox)
+Checkout â†’ Setup Node.js 18 â†’ npm ci â†’ Install Playwright browsers
+  â†’ Run 27 Tests (4 workers, parallel)
+  â†’ Parse results (passed/failed/flaky/duration/pass rate)
+  â†’ Zip Playwright report
+  â†’ Upload HTML report artifact (30 days)
+  â†’ Upload test videos artifact (7 days)
+  â†’ Publish JUnit results
+  â†’ Generate GitHub Step Summary
+  â†’ Send HTML email (Gmail SMTP â†’ Outlook inbox)
 ```
 
 ---
 
-## 📧 Email Notifications
+## ðŸ“§ Email Notifications
 
 Every pipeline run sends a rich HTML email to the configured inbox:
 
-- **✅ Success email** — green header, metrics table (total/passed/failed/pass rate/duration), run details, test suites table, link to artifacts
-- **❌ Failure email** — red header, same metrics + action required checklist
-- **Attachment** — `playwright-report.zip` (full Playwright HTML report)
+- **âœ… Success email** â€” green header, metrics table (total/passed/failed/pass rate/duration), run details, test suites table, link to artifacts
+- **âŒ Failure email** â€” red header, same metrics + action required checklist
+- **Attachment** â€” `playwright-report.zip` (full Playwright HTML report)
 
 **Email subject examples:**
 ```
-✅ [Playwright E2E] PASSED | 27/27 Tests | Pass Rate: 100% | SauceDemo | Run #18 | Branch: main
-❌ [Playwright E2E] FAILED | 2 Failed, 25 Passed / 27 Total | Pass Rate: 92.6% | SauceDemo | Run #19 | Branch: main
+âœ… [Playwright E2E] PASSED | 27/27 Tests | Pass Rate: 100% | SauceDemo | Run #18 | Branch: main
+âŒ [Playwright E2E] FAILED | 2 Failed, 25 Passed / 27 Total | Pass Rate: 92.6% | SauceDemo | Run #19 | Branch: main
 ```
 
 ---
 
-## 🔑 Test Credentials
+## ðŸ”‘ Test Credentials
 
 All accounts work on `https://www.saucedemo.com`:
 
 | Username | Password | Notes |
 |----------|----------|-------|
-| `standard_user` | `secret_sauce` | ✅ Main test account |
-| `problem_user` | `secret_sauce` | ✅ UI bug scenarios |
-| `performance_glitch_user` | `secret_sauce` | ✅ Slow-load scenarios |
-| `locked_out_user` | `secret_sauce` | ❌ Locked (negative test) |
+| `standard_user` | `secret_sauce` | âœ… Main test account |
+| `problem_user` | `secret_sauce` | âœ… UI bug scenarios |
+| `performance_glitch_user` | `secret_sauce` | âœ… Slow-load scenarios |
+| `locked_out_user` | `secret_sauce` | âŒ Locked (negative test) |
 
 ---
 
-## 🛠️ Playwright Configuration
+## ðŸ› ï¸ Playwright Configuration
 
 | Setting | Value |
 |---------|-------|
@@ -179,7 +179,7 @@ All accounts work on `https://www.saucedemo.com`:
 
 ---
 
-## 🧪 Run Commands Cheatsheet
+## ðŸ§ª Run Commands Cheatsheet
 
 ### By tag (npm scripts)
 ```bash
@@ -207,7 +207,7 @@ npx playwright test tests/negative-cases.spec.ts
 ```bash
 npx playwright test --grep "TC-001"     # Single TC by ID
 npx playwright test --grep "E2E-001"    # Single E2E by ID
-npx playwright test --grep "TC-02"      # Range — matches TC-020 to TC-029
+npx playwright test --grep "TC-02"      # Range â€” matches TC-020 to TC-029
 ```
 
 ### Browser & debug modes
@@ -235,7 +235,7 @@ gh run watch                                      # Live-tail the current run
 
 ---
 
-## 📈 Reports & Artifacts
+## ðŸ“ˆ Reports & Artifacts
 
 | Artifact | Retention | Contents |
 |----------|-----------|---------|
@@ -246,35 +246,66 @@ gh run watch                                      # Live-tail the current run
 
 ---
 
-## 🔧 Technologies Used
+## ðŸ”§ Technologies Used
 
 | Technology | Version | Purpose |
 |------------|---------|---------|
 | [Playwright](https://playwright.dev/) | Latest | Browser automation |
 | [TypeScript](https://www.typescriptlang.org/) | 5.x | Type-safe test code |
 | [Node.js](https://nodejs.org/) | 18+ | Runtime |
-| [GitHub Actions](https://github.com/features/actions) | — | CI/CD pipeline |
+| [GitHub Actions](https://github.com/features/actions) | â€” | CI/CD pipeline |
 | [dawidd6/action-send-mail](https://github.com/dawidd6/action-send-mail) | v3 | Email notifications |
 
----
-
-## �‍💻 About the Author
-
-I'm a passionate QA automation engineer with a strong drive to continuously learn, build, and ship things that work in the real world — not just scripts that run on a local machine.
-
-This framework is a reflection of that mindset. It started as a basic test suite and evolved into a production-grade automation framework with:
-- A proper CI/CD pipeline that runs 4× a day and emails results automatically
-- Storage state for session reuse — because every second counts in a real pipeline
-- TypeScript strict mode enforced — because quality starts at the code level
-- Clean architecture (POM, fixtures, JSON test data) — because maintainability matters
-
-**On leveraging AI in this age:**
-We're in the middle of an AI revolution, and I believe the best engineers are those who know how to use AI tools as force multipliers — not shortcuts. Throughout building this framework, I've used AI-assisted development to accelerate learning, explore best practices, debug faster, and write better code. The goal isn't to let AI do the work — it's to use AI to do *more* and learn *deeper*, faster than was ever possible before.
-
-> *"The best automation engineer isn't the one who knows everything — it's the one who never stops building."*
 
 ---
 
-## �📜 License
+## About the Author
 
-MIT — free to use for learning and interview preparation.
+Passionate QA automation engineer. Strong believer in building things right, not just fast.
+
+This framework represents my approach to test engineering - treating automation as a **first-class engineering discipline**, not an afterthought:
+
+| Pillar | What's Built |
+|--------|-------------|
+| **Scalability** | Parallel workers, global auth via storage state, tagged test suites (`@smoke`, `@regression`) |
+| **Reliability** | TypeScript strict mode, Page Object Model, zero hardcoded credentials |
+| **Speed** | Login-once strategy (`global-setup.ts`) - auth reused across all 27 tests, no repeated UI login |
+| **Observability** | GitHub Actions CI/CD, rich HTML email reports, JUnit XML, GitHub Step Summary |
+| **Maintainability** | Clean POM architecture, JSON test data, custom fixtures - built for a team, not just one person |
+
+**On Playwright specifically:**
+Playwright is my framework of choice because it's built for the modern web - native async/await, auto-waiting, network interception, multi-browser support in one tool, and a storage state API that makes login-once patterns trivially easy. This project uses Playwright to its full depth: `storageState`, `test.use()` overrides, `--grep` tag filtering, `globalSetup`, and the full fixture system.
+
+**On AI-augmented engineering:**
+We're at a point in history where the gap between a good engineer and a great one is how effectively they leverage AI. I use AI tools daily - to learn new patterns, validate architectural decisions, debug with context, and write cleaner TypeScript. The skill isn't in knowing everything. It's in knowing how to find the best answer, understand it fully, and apply it with precision.
+
+The engineers who thrive in this era won't be those who avoid AI. They'll be those who know exactly how to use it - and when not to.
+
+> *"The best automation engineer isn't the one who knows everything - it's the one who never stops building, and uses every tool available to build better."*
+
+---
+
+## Roadmap - Planned Enhancements
+
+This framework is actively evolving. Planned additions to make it a complete enterprise-grade QA platform:
+
+| # | Enhancement | Description | Priority |
+|---|-------------|-------------|----------|
+| 1 | **Allure Reporting** | Enterprise visual report portal with history, trends and suite breakdown | High |
+| 2 | **API Testing Layer** | Playwright `request` fixture - test REST APIs alongside UI, API-first test setup | High |
+| 3 | **Cucumber / BDD** | Gherkin feature files - business-readable tests that non-technical stakeholders can understand | High |
+| 4 | **Visual Regression** | Screenshot diff testing - catch unintended UI changes across deployments | Medium |
+| 5 | **Accessibility Testing** | axe-core integration - WCAG 2.1 compliance checks on every run | Medium |
+| 6 | **Performance Testing** | k6 or Playwright metrics - response times, load behaviour, Core Web Vitals | Medium |
+| 7 | **Test Data Factory** | Faker.js - dynamic test data generation, eliminate static JSON dependency | Medium |
+| 8 | **JIRA Integration** | Auto-link failing tests to JIRA tickets, update status on pass/fail | Planned |
+| 9 | **Slack Notifications** | Alert team Slack channels instantly on pipeline failure | Planned |
+| 10 | **Docker Support** | Containerised test execution - consistent environments across local and CI | Planned |
+
+> Contributions and suggestions welcome - open an issue or PR.
+
+---
+
+## License
+
+MIT - free to use for learning and interview preparation.
