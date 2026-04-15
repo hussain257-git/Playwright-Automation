@@ -134,7 +134,7 @@ jobs:
           server_port: 587
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
-          subject: "[PASSED] Playwright CI | Run #${{ github.run_number }} | ${{ github.ref_name }} | ${{ steps.parse.outputs.passed }}/${{ steps.parse.outputs.total }} (${{ steps.parse.outputs.pass_rate }})"
+          subject: "✅ [Playwright E2E] PASSED | ${{ steps.parse.outputs.passed }}/${{ steps.parse.outputs.total }} Tests | Pass Rate: ${{ steps.parse.outputs.pass_rate }} | SauceDemo | Run #${{ github.run_number }} | Branch: ${{ github.ref_name }}"
           to: HussainBasha.Shaik257@outlook.com
           from: ${{ secrets.EMAIL_USERNAME }}
           attachments: playwright-report.zip
@@ -211,7 +211,7 @@ jobs:
           server_port: 587
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
-          subject: "[FAILED] Playwright CI | Run #${{ github.run_number }} | ${{ github.ref_name }} | ${{ steps.parse.outputs.failed }} failed / ${{ steps.parse.outputs.total }} total"
+          subject: "❌ [Playwright E2E] FAILED | ${{ steps.parse.outputs.failed }} Failed, ${{ steps.parse.outputs.passed }} Passed / ${{ steps.parse.outputs.total }} Total | Pass Rate: ${{ steps.parse.outputs.pass_rate }} | SauceDemo | Run #${{ github.run_number }} | Branch: ${{ github.ref_name }}"
           to: HussainBasha.Shaik257@outlook.com
           from: ${{ secrets.EMAIL_USERNAME }}
           attachments: playwright-report.zip
