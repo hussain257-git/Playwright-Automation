@@ -70,3 +70,44 @@ jobs:
           echo "- **Commit**: ${{ github.sha }}" >> $env:GITHUB_STEP_SUMMARY
           echo "- **View Report**: Download the playwright-report artifact above" >> $env:GITHUB_STEP_SUMMARY
 
+      - name: Send email on success
+        if: success()
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp-mail.outlook.com
+          server_port: 587
+          username: ${{ secrets.EMAIL_USERNAME }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          subject: "✅ Playwright Tests PASSED - Run #${{ github.run_number }} (${{ github.ref_name }})"
+          to: HussainBasha.Shaik257@outlook.com
+          from: ${{ secrets.EMAIL_USERNAME }}
+          body: |
+            ✅ All Playwright tests PASSED
+
+            Run #${{ github.run_number }} on branch: ${{ github.ref_name }}
+            Triggered by: ${{ github.actor }}
+            Commit: ${{ github.sha }}
+
+            View run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+            Download report: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }} (playwright-report artifact)
+
+      - name: Send email on failure
+        if: failure()
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp-mail.outlook.com
+          server_port: 587
+          username: ${{ secrets.EMAIL_USERNAME }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          subject: "❌ Playwright Tests FAILED - Run #${{ github.run_number }} (${{ github.ref_name }})"
+          to: HussainBasha.Shaik257@outlook.com
+          from: ${{ secrets.EMAIL_USERNAME }}
+          body: |
+            ❌ Playwright tests FAILED
+
+            Run #${{ github.run_number }} on branch: ${{ github.ref_name }}
+            Triggered by: ${{ github.actor }}
+            Commit: ${{ github.sha }}
+
+            View logs: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
