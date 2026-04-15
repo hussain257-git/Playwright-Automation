@@ -34,20 +34,9 @@ export const test = base.extend<PageFixtures>({
   },
 
   authenticatedPage: async ({ page }, use) => {
-    // Pre-authenticate the user by storing auth tokens or cookies
     const loginPage = new LoginPage(page);
-    await loginPage.navigateToLoginPage();
-    await loginPage.login("test@example.com", "password123");
-    
-    // Save authenticated state to reuse in other tests
-    await page.context().addCookies([
-      {
-        name: "auth_token",
-        value: "fake-token-value",
-        url: "http://localhost:3000",
-      },
-    ]);
-
+    await page.goto("https://www.saucedemo.com");
+    await loginPage.login("standard_user", "secret_sauce");
     await use(page);
   },
 });

@@ -4,7 +4,7 @@ export default defineConfig({
   testDir: "./tests",
   timeout: 60_000,  // Increased from 30s to 60s for Sauce Demo
   retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? 4 : 2,
+  workers: 1,  // Single worker for stability
   reporter: [
     ["html", { outputFolder: "playwright-report" }],
     ["list"],

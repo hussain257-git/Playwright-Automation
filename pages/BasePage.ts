@@ -1,30 +1,31 @@
 import { Page, Locator } from "@playwright/test";
 
+/**
+ * BasePage provides common functionality for all page objects
+ * Focus: Simple, stable, minimal wait times
+ */
 export class BasePage {
   readonly page: Page;
+  protected readonly DEFAULT_TIMEOUT = 5000;
 
   constructor(page: Page) {
     this.page = page;
   }
 
   async navigate(url: string): Promise<void> {
-    await this.page.goto(url);
+    await this.page.goto(url, { waitUntil: "domcontentloaded" });
   }
 
   async click(locator: Locator | string): Promise<void> {
-    if (typeof locator === "string") {
-      await this.page.click(locator);
-    } else {
-      await locator.click();
-    }
+    const element = typeof locator === "string" ? this.page.locator(locator) : locator;
+    await element.waitFor({ state: "visible", timeout: this.DEFAULT_TIMEOUT });
+    await element.click({ timeout: this.DEFAULT_TIMEOUT });
   }
 
   async fill(locator: Locator | string, text: string): Promise<void> {
-    if (typeof locator === "string") {
-      await this.page.fill(locator, text);
-    } else {
-      await locator.fill(text);
-    }
+    const element = typeof locator === "string" ? this.page.locator(locator) : locator;
+    await element.waitFor({ state: "visible", timeout: this.DEFAULT_TIMEOUT });
+    await element.fill(text, { timeout: this.DEFAULT_TIMEOUT });
   }
 
   async getText(locator: Locator | string): Promise<string> {

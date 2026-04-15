@@ -1,4 +1,6 @@
 import { test, expect } from "@playwright/test";
+import { BasePage } from "../pages/BasePage";
+import testDataJson from "../test-data/users.json";
 
 test.describe("Verification - Framework Setup", () => {
   test("Verify Playwright is working with real website", async ({ page }) => {
@@ -44,24 +46,16 @@ test.describe("Verification - Framework Setup", () => {
   });
 
   test("Verify test data can be imported", async ({ page }) => {
-    // Import and verify test data works
-    const testData = await import("../test-data/users.json");
+    expect(testDataJson.validUsers).toBeDefined();
+    expect(testDataJson.validUsers.length).toBeGreaterThan(0);
+    expect(testDataJson.validUsers[0].email).toBeTruthy();
     
-    expect(testData.validUsers).toBeDefined();
-    expect(testData.validUsers.length).toBeGreaterThan(0);
-    expect(testData.validUsers[0].email).toBeTruthy();
-    
-    console.log(`✓ Test data loaded: ${testData.validUsers.length} users available`);
+    console.log(`✓ Test data loaded: ${testDataJson.validUsers.length} users available`);
   });
 
   test("Verify Page Object Model instantiation", async ({ page }) => {
-    // This test verifies the page object can be instantiated without errors
-    const { BasePage } = await import("../pages/BasePage");
-    
-    // Create instance
     const basePage = new BasePage(page);
     
-    // Verify methods exist
     expect(typeof basePage.navigate).toBe("function");
     expect(typeof basePage.click).toBe("function");
     expect(typeof basePage.fill).toBe("function");
